@@ -1,0 +1,10 @@
+{
+    "theme": {
+        "status_bar": {
+            "bar_color": "#000000",
+            "bar_brigthness": "dark",
+            "bar_icon_brigthness": "light"
+        },
+        "background_color": "#000000"
+    }
+}

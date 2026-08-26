@@ -1,0 +1,14 @@
+@import "./assets/css/font-awesome.css";
+@import "./assets/css/scrollbar.css";
+@import "./assets/css/slide.css";
+
+:root {
+  color-scheme: dark;
+  background-color: black;
+  color: white;
+}
+
+
+body {
+    font-family: 'Roboto', sans-serif;
+}

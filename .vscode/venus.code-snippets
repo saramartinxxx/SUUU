@@ -1,0 +1,50 @@
+{
+	"Define a complete custom tag.": {
+		"scope": "javascript,typescript",
+		"prefix": [
+			"dfn",
+			"define"
+		],
+		"body": [
+			"define('$1', {",
+			"    /** @this HTMLElement */",
+			"    mount() {",
+			"        $0",
+			"    },",
+			"    /** @this HTMLElement */",
+			"    unmount() {",
+			"        ",
+			"    }",
+			"});"
+		],
+		"description": "Generates the complete custom element definition with tag name"
+	},
+	"Mount Hook Callback": {
+		"scope": "javascript,typescript",
+		"prefix": [
+			"mnt",
+			"mount"
+		],
+		"body": [
+			"/** @this HTMLElement */",
+			"mount() {",
+			"    $0",
+			"},"
+		],
+		"description": "Complete the mount hook"
+	},
+	"Unmount Hook Callback": {
+		"scope": "javascript,typescript",
+		"prefix": [
+			"unmnt",
+			"unmount"
+		],
+		"body": [
+			"/** @this HTMLElement */",
+			"unmount() {",
+			"    $0",
+			"},"
+		],
+		"description": "Complete the mount hook"
+	}
+}

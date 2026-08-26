@@ -1,0 +1,8 @@
+import './assets/scripts/tailwind.js'
+import './assets/scripts/components/scaffold.js'
+import './assets/scripts/components/appbar.js'
+import './assets/scripts/components/textfield.js'
+import './assets/scripts/components/listview.js'
+import './assets/scripts/components/poster.js'
+import './assets/scripts/components/wrapper.js'
+import './assets/scripts/components/tab.js'
