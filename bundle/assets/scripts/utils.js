@@ -88,7 +88,8 @@ function urlToKey(str) {
  */
 function highestRated(arr) {
     const numbers = arr.map(e => e.vote_average);
-    return Math.max(...numbers);
+    const rated = Math.max(...numbers);
+    return arr.find(e => e.vote_average === rated);
 }
 
 /**
