@@ -1,0 +1,21 @@
+.fade_fast {
+    animation: fade 100ms
+}
+
+.fade {
+    animation: fade 300ms
+}
+
+.fade_long {
+    animation: fade 600ms
+}
+
+@keyframes fade {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}

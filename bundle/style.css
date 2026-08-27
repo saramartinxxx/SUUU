@@ -1,6 +1,7 @@
 @import "./assets/css/font-awesome.css";
 @import "./assets/css/scrollbar.css";
 @import "./assets/css/slide.css";
+@import "./assets/css/fade.css";
 
 :root {
   color-scheme: dark;
@@ -8,7 +9,10 @@
   color: white;
 }
 
+* {
+  box-sizing: border-box;
+}
 
 body {
-    font-family: 'Roboto', sans-serif;
+  font-family: 'Roboto', sans-serif;
 }

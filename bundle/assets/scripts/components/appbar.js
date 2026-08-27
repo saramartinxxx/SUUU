@@ -16,10 +16,12 @@ define(appbartagname, {
             } else {
                 this.classList.remove('-translate-y-full');
             }
-            if (currentScrollY >= appbarheight) {
-                this.classList.add('bg-black');
-            } else {
-                this.classList.remove('bg-black');
+            if (!this.dataset.nobg) {
+                if (currentScrollY >= appbarheight) {
+                    this.classList.add('bg-black');
+                } else {
+                    this.classList.remove('bg-black');
+                }
             }
             this._lastScrollY = currentScrollY;
         }

@@ -1,5 +1,5 @@
 import { data_scroll } from "../constants/data.js";
-import { injectData } from "../utils.js";
+import { getRandomInt, highestRated, injectData } from "../utils.js";
 
 const createWrapperChildren = (results) => {
     return results.map(object => {
@@ -21,6 +21,8 @@ const createWrapper = (label, results) => {
 }
 
 (async () => {
+    const scaffold = document.querySelector('app-scaffold');
+    scaffold.style.paddingTop = '0px';
     const main = document.querySelector('main');
     let count = 0;
     for (let el of data_scroll) {
@@ -28,6 +30,12 @@ const createWrapper = (label, results) => {
         const wrapper = createWrapper(el.label, data.results);
         if (el.hint) {
             wrapper.__hint = el.hint;
+        }
+        if (count === 0) {
+            const item = data.results[getRandomInt(0, data.results.length - 1)];
+            const header = document.createElement('main-header');
+            injectData(header, item);
+            main.appendChild(header);
         }
         if (el.tabs && el.tabs.length) {
             wrapper.__tabs = el.tabs.map((t, i) => {
@@ -54,4 +62,8 @@ const createWrapper = (label, results) => {
         main.appendChild(wrapper);
         count++;
     }
+    const tmdblicense = document.createElement('tmdb-license');
+    scaffold.appendChild(tmdblicense);
+    const applegal = document.createElement('app-legal');
+    scaffold.appendChild(applegal);
 })();
