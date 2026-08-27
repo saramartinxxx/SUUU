@@ -6,5 +6,5 @@
     "author": "[martinxxx](https://github.com/saramartinxxx)",
     "description": "A user-friendly extension for scrapping movie and TV show links from across the internet, making it simple and convenient to find entertainment in one place.",
     "registry": "https://raw.githubusercontent.com/saramartinxxx/SUUU/refs/heads/main/manifest.json",
-    "bundle": "/bundle.zip"
+    "bundle": "https://raw.githubusercontent.com/saramartinxxx/SUUU/refs/heads/main/bundle.zip"
 }
