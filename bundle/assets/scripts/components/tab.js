@@ -1,4 +1,4 @@
-import { define } from '../utils.js';
+import { define, newElement } from '../utils.js';
 
 define('tab-button', {
     /** @this HTMLElement */
@@ -15,7 +15,7 @@ define('tab-button', {
             <span class="tab-label pr-2">${labelText}</span>
         `;
 
-        const style = document.createElement('style');
+        const style = newElement('style');
         style.innerHTML = `
             tab-button[selected] {
                 background-color: #e40014 !important; /* Tailwind bg-red-600 */

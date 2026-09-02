@@ -1,0 +1,16 @@
+.seasons-selection-dropdown {
+    position: fixed;
+    position-anchor: --seasons-selection-button;
+
+    top: anchor(bottom);
+    left: anchor(left);
+    margin-top: 4px;
+
+    position-try-fallbacks: flip-block;
+
+    display: none;
+}
+
+.seasons-selection-dropdown.show {
+    display: block;
+}

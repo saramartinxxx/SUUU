@@ -5,6 +5,7 @@
             "bar_brigthness": "dark",
             "bar_icon_brigthness": "light"
         },
+        "prefer_mode": "dark",
         "background_color": "#000000"
     }
 }

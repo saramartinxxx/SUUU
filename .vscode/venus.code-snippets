@@ -46,5 +46,14 @@
 			"},"
 		],
 		"description": "Complete the mount hook"
+	},
+	"HTML tag class shortcut": {
+		"scope": "javascript,typescript",
+		"prefix": [
+			"clss",
+			"css",
+		],
+		"body": "class='$1'",
+		"description": "Complete html tag class"
 	}
 }

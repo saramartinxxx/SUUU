@@ -1,4 +1,4 @@
-import { define, firstElement } from '../utils.js';
+import { define, newElement } from '../utils.js';
 
 const apptextfieldtagname = "app-textfield";
 const apptextfieldhint = "Search";
@@ -9,9 +9,9 @@ export { apptextfieldheight, apptextfieldhint, apptextfieldtagname }
 define(apptextfieldtagname, {
     /** @this HTMLElement */
     mount() {
-        let className = `w-full h-[${apptextfieldheight}px] px-3 rounded-xl bg-gray-800`;
+        let className = `w-full h-[${apptextfieldheight}px] px-3 rounded-lg bg-white/10`;
         this.className = `flex items-center ${this.className.length ? this.className : className}`;
-        const input = document.createElement('input');
+        const input = newElement('input');
         input.id = apptextfieldtagname;
         input.placeholder = apptextfieldhint;
         input.className = `w-full h-[${apptextfieldheight}px] border-0 border-transparent focus:outline-hidden focus:ring-0`;

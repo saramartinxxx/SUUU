@@ -40,18 +40,18 @@ const tvGenres = {
 }
 
 const getGenres = (id, type) => {
-    if (!id) return '';
+    if (!id) return [''];
     if (Array.isArray(id)) {
-        if (!id.length) return '';
+        if (!id.length) return [''];
         if (type) {
             return id.map(e => ((type === "movie" ? movieGenres : tvGenres))[e]);
         }
         return id.map(e => ({ ...movieGenres, ...tvGenres }[e]));
     }
     if (type) {
-        return type === "movie" ? movieGenres[id] : tvGenres[id];
+        return [type === "movie" ? movieGenres[id] : tvGenres[id]];
     }
-    return { ...movieGenres, ...tvGenres }[id];
+    return [{ ...movieGenres, ...tvGenres }[id]];
 }
 
 export { getGenres, movieGenres, tvGenres }

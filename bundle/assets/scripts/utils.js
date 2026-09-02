@@ -24,6 +24,16 @@ function toFixed(value, fractionDigits) {
 
 /**
  * 
+ * @param {number} min 
+ * @param {number} max 
+ */
+function* generate(min, max) {
+    let currVal = min;
+    while (currVal <= max) yield currVal++;
+}
+
+/**
+ * 
  * @param {string} a 
  * @param {string} b 
  * @returns {boolean}
@@ -56,12 +66,6 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function injectData(child, object) {
-    Object.entries(object).forEach(o => {
-        child[`__${o[0]}`] = o[1];
-    });
-}
-
 function urlToKey(str) {
     try {
         const url = new URL(str);
@@ -83,6 +87,90 @@ function urlToKey(str) {
 }
 
 /**
+ * @param {number | undefined} gender
+ */
+function format_gender(gender) { 
+    if (gender === 0) return 'Not specified';
+    if (gender === 1) return "Famale";
+    if (gender === 2) return "Male";
+    if (gender === 3) return "Non-binary";
+    return "Unknown";
+}
+
+/**
+ * 
+ * @param {string | undefined} date 
+ * @param {string | undefined} deathdate
+ * @returns {string | undefined}
+ */
+function format_age(date, deathdate) {
+    if (!date) return undefined;
+
+    const birthDate = new Date(date);
+    if (isNaN(birthDate.getTime())) {
+        throw new Error("Invalid date format");
+    }
+
+    const endDate = deathdate ? new Date(deathdate) : new Date();
+    if (isNaN(endDate.getTime())) {
+        throw new Error("Invalid deathdate format");
+    }
+
+    let age = endDate.getFullYear() - birthDate.getFullYear();
+    const monthDiff = endDate.getMonth() - birthDate.getMonth();
+
+    if (monthDiff < 0 || (monthDiff === 0 && endDate.getDate() < birthDate.getDate())) {
+        age--;
+    }
+
+    if (age < 0) {
+        throw new Error("Death date cannot be before birth date");
+    }
+
+    return `${age} year${age === 1 ? '' : 's'} old`;
+}
+
+
+/**
+ * @param {string} key 
+ */
+async function getPropsCache(key) {
+    const str = await localforage.getItem(key);
+    if (str) return JSON.parse(str);
+}
+
+/**
+ * 
+ * @param {string} key 
+ * @param {Object} value 
+ */
+async function setPropsCache(key, value) {
+    let props = (await getPropsCache(key)) ?? {};
+    Object.entries(value).forEach(el => {
+        props[el[0]] = el[1];
+    });
+    return localforage.setItem(key, JSON.stringify(props));
+}
+
+function getYear(str) {
+    return new Date(str).getFullYear();
+}
+
+function getMonth(str) {
+    return new Date(str).getMonth();
+}
+
+/**
+ * 
+ * @param {string | undefined} str 
+ * @returns string
+ */
+function format_date(str) {
+    if (!str) return 'Unknown';
+    return new Intl.DateTimeFormat('en-US', { dateStyle: 'medium' }).format(new Date(str));
+}
+
+/**
  * 
  * @param {any[]} arr 
  */
@@ -90,6 +178,62 @@ function highestRated(arr) {
     const numbers = arr.map(e => e.vote_average);
     const rated = Math.max(...numbers);
     return arr.find(e => e.vote_average === rated);
+}
+
+/**
+ * 
+ * @param {string} pageName 
+ * @param {Object | undefined} props 
+ */
+function navigatePages(pageName, props) {
+    let url = `/pages/${pageName}.html`;
+    if (props && Object.entries(props).length) {
+        let data = Object.entries(props);
+        url = `${url}?${data.map(e => (`${e[0]}=${e[1]}`)).join('&')}`;
+    }
+    window.location.assign(url);
+}
+
+/**
+ * 
+ * @param {string} str 
+ * @returns string
+ */
+function b64_encode(str) {
+    const bytes = new TextEncoder().encode(str);
+    const binstr = String.fromCodePoint(...bytes);
+    return btoa(binstr);
+}
+
+/**
+ * 
+ * @param {string} b64
+ * @returns string
+ */
+function b64_decode(b64) {
+    const binstr = atob(b64.replaceAll(' ', "+"));
+    const bytes = Uint8Array.from(binstr, (m) => m.codePointAt(0));
+    return new TextDecoder().decode(bytes);
+}
+
+/**
+ * 
+ * @param {[]} videos 
+ */
+const play = (videos) => playlink_js.play(videos);
+
+/**
+ * 
+ * @param {number} totalMinutes 
+ * @returns string
+ */
+function format_time(totalMinutes) {
+    if (!totalMinutes) return '';
+    const h = Math.floor(totalMinutes / 60);
+    const m = totalMinutes % 60;
+    const hDisplay = h > 0 ? `${h}h ` : "";
+    const mDisplay = m > 0 ? `${m}mins` : "";
+    return (hDisplay + mDisplay).trim();
 }
 
 /**
@@ -122,13 +266,52 @@ export default function define(name, hook) {
     customElements.define(name, c);
 }
 
+/**
+ * 
+ * @param {keyof HTMLElementTagNameMap} tag 
+ * @param {ElementCreationOptions | undefined} options
+ * @returns 
+ */
+const newElement = (tag, options) => (document.createElement(tag, options));
+
+/**
+ * 
+ * @param {number | undefined} amount 
+ * @param {string | undefined} currencyCode 
+ * @returns 
+ */
+function format_currency(amount, currencyCode) {
+    if (!amount) return '';
+    const formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: currencyCode ?? "USD",
+        notation: 'compact',
+        maximumFractionDigits: 1,
+    });
+    return formatter.format(amount);
+}
+
 export {
     hasElement,
     define,
     firstElement,
     getRandomInt,
     urlToKey,
-    injectData,
     toFixed,
-    highestRated
+    highestRated,
+    navigatePages,
+    getYear,
+    format_date,
+    getMonth,
+    newElement,
+    play,
+    generate,
+    getPropsCache,
+    setPropsCache,
+    format_time,
+    format_currency,
+    b64_encode,
+    b64_decode,
+    format_age,
+    format_gender,
 }
