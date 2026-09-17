@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SUUU.APP</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: radial-gradient(circle at center, #1e1b4b 0%, #090514 100%);
+            min-height: 100vh;
+            color: #f1f5f9;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            overflow-x: hidden;
+        }
+
+        .top-bar {
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #7c3aed 0%, #6366f1 50%, #22d3ee 100%);
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            width: 100%;
+            max-width: 896px;
+            text-align: center;
+        }
+
+        header {
+            margin-bottom: 48px;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            letter-spacing: 0.05em;
+            background: linear-gradient(90deg, #a78bfa 0%, #e2e8f0 50%, #67e8f9 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 12px;
+        }
+
+        @media (min-width: 768px) {
+            h1 {
+                font-size: 4.5rem;
+            }
+        }
+
+        h1 span {
+            color: #6366f1;
+            -webkit-text-fill-color: initial;
+        }
+
+        .subtitle {
+            color: #94a3b8;
+            font-size: 0.875rem;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .message-board {
+            width: 100%;
+            max-width: 448px;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(30, 41, 59, 0.8);
+            border-radius: 24px;
+            padding: 32px;
+            box-shadow: 0 0 40px rgba(99, 102, 241, 0.15);
+            transition: transform 0.3s ease;
+        }
+
+        .message-board:hover {
+            transform: scale(1.01);
+        }
+
+        .icon-container {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 64px;
+            height: 64px;
+            border-radius: 16px;
+            margin-bottom: 24px;
+            font-size: 28px;
+            overflow: hidden;
+        }
+
+        .icon-app {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #f87171;
+        }
+
+        .icon-ext {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: #34d399;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: #ffffff;
+        }
+
+        .description {
+            color: #94a3b8;
+            font-size: 0.875rem;
+            line-height: 1.6;
+            margin-bottom: 32px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 14px 24px;
+            font-weight: 600;
+            border-radius: 12px;
+            text-decoration: none;
+            color: #ffffff;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-app {
+            background: linear-gradient(135deg, #7c3aed 0%, #6366f1 100%);
+            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
+        }
+
+        .btn-app:hover {
+            background: linear-gradient(135deg, #6d28d9 0%, #4f46e5 100%);
+        }
+
+        .btn-ext {
+            background: linear-gradient(135deg, #059669 0%, #0d9488 100%);
+            box-shadow: 0 10px 20px rgba(13, 148, 136, 0.3);
+        }
+
+        .btn-ext:hover {
+            background: linear-gradient(135deg, #047857 0%, #0f766e 100%);
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        .spinner {
+            width: 32px;
+            height: 32px;
+            border: 3px solid rgba(99, 102, 241, 0.2);
+            border-top-color: #818cf8;
+            border-radius: 50%;
+            margin: 0 auto 16px auto;
+            animation: spin 0.8s linear infinite;
+        }
+
+        .loading-text {
+            color: #64748b;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        footer {
+            padding: 32px;
+            font-size: 0.75rem;
+            color: #475569;
+            letter-spacing: 0.05em;
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <section class="message-board">
+            <div id="state-install-app" class="hidden">
+                <div class="icon-container icon-app">❌</div>
+                <h2>Unsupported Browser</h2>
+                <p class="description">
+                    You need to set up the foundation. Please download and install
+                    the Playlink application to begin.
+                </p>
+                <a href="https://playlink.dev" class="btn btn-app">GET PLAYLINK</a>
+            </div>
+
+            <div id="state-install-extension" class="hidden">
+                <div class="icon-container icon-ext">
+                    <img style="object-fit: cover; width: 100%; height: 100%;"
+                        src="https://raw.githubusercontent.com/saramartinxxx/SUUU/refs/heads/main/logo.png" alt="">
+                </div>
+                <h2>Install SUUU!</h2>
+                <p class="description">
+                    Now, install the SUUU extension to enjoy your free media entertainment.
+                </p>
+                <button onclick="installextension()" class="btn btn-ext">INSTALL NOW</button>
+            </div>
+
+            <div id="state-all-set" class="hidden">
+                <div class="icon-container icon-ext"><strong>✓</strong></div>
+                <h2>You're all set!</h2>
+                <p class="description">
+                    Now, Go to <strong>Extension page</strong> and find SUUU then click on open. thats it!!!
+                </p>
+            </div>
+
+            <div id="state-loading" style="padding: 48px 0;">
+                <div class="spinner"></div>
+                <div class="loading-text">Checking environment...</div>
+            </div>
+
+        </section>
+    </main>
+
+    <script>
+        async function installextension() {
+            const manifest = await (await fetch('https://raw.githubusercontent.com/saramartinxxx/SUUU/refs/heads/main/manifest.json')).json();
+            playlink_js.extension.install(manifest);
+        }
+        document.addEventListener("DOMContentLoaded", async function () {
+            const loadingState = document.getElementById('state-loading');
+            const installAppState = document.getElementById('state-install-app');
+            const installExtState = document.getElementById('state-install-extension');
+            const allsetState = document.getElementById('state-all-set');
+
+            if (loadingState) loadingState.classList.add('hidden');
+
+            if (typeof playlink_js === "undefined") {
+                installAppState.classList.remove('hidden');
+            } else {
+                const extension = await playlink_js.extension.get('com.saramartin.suuu');
+                if (extension) {
+                    allsetState.classList.remove('hidden');
+                } else {
+                    installExtState.classList.remove('hidden');
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
