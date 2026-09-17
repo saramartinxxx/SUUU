@@ -1,10 +1,9 @@
-import { b64_decode, format_date, newElement } from "../utils.js";
+import { format_date, get_page_data, newElement } from "../utils.js";
 import { request, base } from '../api/themoviedb.js'
 import { getGenres } from '../constants/genre.js'
 import { posterClick } from '../components/poster.js'
 
-const uri = new URL(window.location.href);
-let data = JSON.parse(b64_decode(uri.searchParams.get('data')));
+let data = JSON.parse(get_page_data());
 
 document.title = `SUUU - ${data.name}`;
 
@@ -15,7 +14,7 @@ document.title = `SUUU - ${data.name}`;
     const headerview = newElement('div');
     headerview.className = `flex flex-col items-center gap-3 slide_up`;
     headerview.innerHTML = `
-    <div class="relative h-[144px] w-[144px] overflow-hidden rounded-full border border-white/30">
+    <div class="relative h-[194px] w-[144px] overflow-hidden border border-white/30">
         <img class='object-cover w-full h-full' src="https://images.tmdb.org/t/p/w400${data.profile_path}" alt="${data.name}">
     </div>
     <strong-title>${data.name}</strong-title>
@@ -45,17 +44,14 @@ document.title = `SUUU - ${data.name}`;
     actingtypeview.className = `flex items-center gap-3 mt-2`;
     const types = ['movie', 'tv'];
     types.forEach((t, i) => {
-        const node = newElement('tab-button');
-        node.textContent = t == "tv" ? "TV shows" : "Movies";
-        if (i === 0) node.setAttribute('selected', 'true');
-        node.onclick = () => {
-            actingtypeview.querySelectorAll('tab-button').forEach(tab => {
-                tab.removeAttribute('selected');
-            });
-            node.setAttribute('selected', 'true');
+        const tab = newElement('tab-button');
+        tab.ariaLabel = t == "tv" ? "TV shows" : "Movies";
+        if (i === 0) tab.setAttribute('selected', 'true');
+        tab.onclick = () => {
+            tab.__select();
             setActingItems(data.combined_credits.cast, t);
         }
-        actingtypeview.appendChild(node);
+        actingtypeview.appendChild(tab);
     });
     actingwrapper.appendChild(actingtypeview);
 
@@ -65,9 +61,7 @@ document.title = `SUUU - ${data.name}`;
 
     /**@param {any[]} items */
     const setActingItems = (items, type) => {
-        Array.from(actingitemsview.childNodes).forEach(child => {
-            actingitemsview.removeChild(child);
-        });
+        actingitemsview.replaceChildren();
         let arr = items.filter(e => (type === "tv" ? e.name : e.title));
         arr.sort((a, b) => new Date(b.first_air_date ?? b.release_date) - new Date(a.first_air_date ?? a.release_date));
         arr.forEach(item => {

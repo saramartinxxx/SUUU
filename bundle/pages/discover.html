@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SUUU - Discover</title>
+    <link rel="stylesheet" href="../style.css">
+    <script type="module" src="../script.js"></script>
+    <script type="module" src="../assets/scripts/pages/discover.js"></script>
+</head>
+
+<body>
+    <app-scaffold>
+        <scaffold-appbar data-height="110">
+            <div class="w-full fade">
+                <div class="flex items-center discover-appbar-wrapper">
+                    <div class="w-4"></div>
+                    <back-button-circle></back-button-circle>
+                    <div class="w-4"></div>
+                    <strong-title></strong-title>
+                </div>
+                <div class="tabs flex items-center w-full overflow-x-auto gap-3 px-4 mt-4"></div>
+            </div>
+        </scaffold-appbar>
+        <app-gridview></app-gridview>
+        <div class="w-full my-6 hidden fade bottom-loading">
+            <circle-progressbar class="mx-auto" data-width="32"></circle-progressbar>
+        </div>
+    </app-scaffold>
+</body>
+
+</html>

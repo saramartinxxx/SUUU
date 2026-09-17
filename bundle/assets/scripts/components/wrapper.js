@@ -1,4 +1,4 @@
-import { define, newElement } from '../utils.js';
+import { define, media_key, newElement } from '../utils.js';
 
 define('data-wrapper', {
     /** @this HTMLElement */
@@ -32,18 +32,26 @@ define('data-wrapper', {
     },
 });
 
-const createWrapperChildren = (items) => {
+/**
+ * @typedef {'poster' | 'backdrop' | undefined} PosterView
+ */
+
+/**@param {PosterView} view */
+const createWrapperChildren = (items, view) => {
     return items.map(object => {
         const poster = newElement('app-poster');
+        poster.__view = view;
         poster.__data = object;
         return poster;
     });
 }
 
-const createWrapper = (label, items) => {
+/**@param {PosterView} view */
+const createWrapper = (label, items, builder, view) => {
     const wrapper = newElement('data-wrapper');
+    wrapper.id = label.toLowerCase();
     wrapper.__label = label;
-    wrapper.__items = createWrapperChildren(items);
+    wrapper.__items = builder ? items.map(builder) : createWrapperChildren(items, view);
     return wrapper;
 }
 

@@ -2,7 +2,8 @@
 @import "./assets/css/scrollbar.css";
 @import "./assets/css/slide.css";
 @import "./assets/css/fade.css";
-@import "./assets//css/seasons_selection.css";
+@import "./assets/css/seasons_selection.css";
+@import "./assets/css/loader.css";
 
 :root {
   color-scheme: dark;

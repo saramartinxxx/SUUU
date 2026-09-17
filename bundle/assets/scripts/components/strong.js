@@ -15,7 +15,7 @@ define('strong-title-marked', {
     /** @this HTMLElement */
     mount() {
         this.className = `flex items-center ${this.className}`;
-        this.innerHTML = `<div class="w-1 h-4 bg-red-500 mr-2 rounded-sm"></div><strong-title>${this.textContent}</strong-title>`;
+        this.innerHTML = `<div class="w-1 h-4 bg-red-500 mr-2"></div><strong-title>${this.textContent}</strong-title>`;
     },
     /** @this HTMLElement */
     unmount() {

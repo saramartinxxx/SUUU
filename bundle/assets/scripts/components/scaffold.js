@@ -13,11 +13,7 @@ define(scaffoldtagname, {
         this.className = `flex flex-col min-h-screen w-screen ${this.className}`;
 
         if (isAppBar) {
-            this.style.paddingTop = `${appbarheight}px`;
+            this.style.paddingTop = `${this.querySelector('scaffold-appbar').dataset.height ?? appbarheight}px`;
         }
     },
-    /** @this HTMLElement */
-    unmount() {
-
-    }
 });

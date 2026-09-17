@@ -1,4 +1,4 @@
-import { base, request } from "../api/themoviedb.js";
+import { base, genre, request } from "../api/themoviedb.js";
 
 const channels = [
     {
@@ -53,7 +53,7 @@ const channels = [
     },
 ];
 
-const data_scroll = [
+const DefaultDataSroll = [
     {
         label: "Trending",
         tabs: [
@@ -122,11 +122,11 @@ const data_scroll = [
         tabs: [
             {
                 label: "Movie",
-                promise: () => request(base("discover/movie?with_genres=28&sort_by=popularity.desc&language=en-US")),
+                promise: () => request(genre({ type: "movie", id: 28 })),
             },
             {
                 label: "TV",
-                promise: () => request(base("discover/tv?with_genres=10759&sort_by=popularity.desc&language=en-US")),
+                promise: () => request(genre({ type: "tv", id: 10759 })),
             },
         ],
     },
@@ -135,11 +135,11 @@ const data_scroll = [
         tabs: [
             {
                 label: "Movie",
-                promise: () => request(base("discover/movie?with_genres=35&sort_by=popularity.desc&language=en-US")),
+                promise: () => request(genre({ type: "movie", id: 35 })),
             },
             {
                 label: "TV",
-                promise: () => request(base("discover/tv?with_genres=35&sort_by=popularity.desc&language=en-US")),
+                promise: () => request(genre({ type: "tv", id: 35 })),
             },
         ],
     },
@@ -148,11 +148,11 @@ const data_scroll = [
         tabs: [
             {
                 label: "Movie",
-                promise: () => request(base("discover/movie?with_genres=80,9648&sort_by=popularity.desc&language=en-US")),
+                promise: () => request(genre({ type: "movie", id: '80,9648' })),
             },
             {
                 label: "TV",
-                promise: () => request(base("discover/tv?with_genres=80,9648&sort_by=popularity.desc&language=en-US")),
+                promise: () => request(genre({ type: "tv", id: '80,9648' })),
             },
         ],
     },
@@ -161,28 +161,28 @@ const data_scroll = [
         tabs: [
             {
                 label: "Movie",
-                promise: () => request(base("discover/movie?with_genres=878,14&sort_by=popularity.desc&language=en-US")),
+                promise: () => request(genre({ type: "movie", id: "878,14" })),
             },
             {
                 label: "TV",
-                promise: () => request(base("discover/tv?with_genres=10765&sort_by=popularity.desc&language=en-US")),
+                promise: () => request(genre({ type: "tv", id: 10765 })),
             },
         ],
     },
     {
         label: "Horror",
-        promise: () => request(base("discover/movie?with_genres=27&sort_by=popularity.desc&language=en-US")),
+        promise: () => request(genre({ type: "movie", id: 27 })),
     },
     {
         label: "Romance",
         tabs: [
             {
                 label: "Movie",
-                promise: () => request(base("discover/movie?with_genres=10749&sort_by=popularity.desc&language=en-US")),
+                promise: () => request(genre({ type: "movie", id: 10749 })),
             },
             {
                 label: "TV",
-                promise: () => request(base("discover/tv?with_genres=10749&sort_by=popularity.desc&language=en-US")),
+                promise: () => request(genre({ type: "tv", id: 10749 })),
             },
         ],
     },
@@ -191,11 +191,11 @@ const data_scroll = [
         tabs: [
             {
                 label: "Movie",
-                promise: () => request(base("discover/movie?with_genres=16&sort_by=popularity.desc&language=en-US")),
+                promise: () => request(genre({ type: "movie", id: 16 })),
             },
             {
                 label: "TV",
-                promise: () => request(base("discover/tv?with_genres=16&sort_by=popularity.desc&language=en-US")),
+                promise: () => request(genre({ type: "tv", id: 16 })),
             },
         ],
     },
@@ -204,14 +204,14 @@ const data_scroll = [
         tabs: [
             {
                 label: "Movie",
-                promise: () => request(base("discover/movie?with_genres=99&sort_by=popularity.desc&language=en-US")),
+                promise: () => request(genre({ type: "movie", id: 99 })),
             },
             {
                 label: "TV",
-                promise: () => request(base("discover/tv?with_genres=99&sort_by=popularity.desc&language=en-US")),
+                promise: () => request(genre({ type: "tv", id: 99 })),
             },
         ],
     }
 ];
 
-export { data_scroll };
+export { DefaultDataSroll };

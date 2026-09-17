@@ -10,13 +10,13 @@ define('people-view', {
     mount() {
         this.className = `flex-none flex flex-col justify-center slide_right`;
         this.innerHTML = `
-        <div class="h-[96px] w-[96px] rounded-full border border-white/30 overflow-hidden relative mx-auto">
+        <div class="photo-view h-[136px] w-[96px] border border-white/30 overflow-hidden relative mx-auto">
             <img class="w-full h-full object-cover" src="https://images.tmdb.org/t/p/w400${this.__data.profile_path}" alt="${this.__data.name}">
         </div>
         <div class="w-[96px] text-center mt-2">
             <span class="text-xs text-white/90 text-center line-clamp-3" onclick="this.classList.toggle('line-clamp-3')">${this.__data.name}${this.__data.character ? `<br><span class="text-white/70">as </span>${this.__data.character}` : ""}</span>
         </div>`;
-        this.onclick = () => peopleClick(this.__data);
+        this.querySelector('.photo-view').onclick = () => peopleClick(this.__data);
     },
     /** @this HTMLElement */
     unmount() {

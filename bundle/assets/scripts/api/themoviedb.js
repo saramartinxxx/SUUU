@@ -56,11 +56,33 @@ const request = async (url, props) => {
 }
 
 /**
- * @param {{ type: string, id: any }} props | return the media detail info includes credits, recommendations, similar, external_ids, images
+ * 
+ * @param {string} url 
+ * @param {number} page 
+ */
+const resolve_page = (url, page) => {
+    const uri = new URL(url);
+    const currentpage = uri.searchParams.get("page");
+    if (currentpage) {
+        return url.replace(`page=${currentpage}`, `page=${page}`);
+    }
+    return `${url}${url.includes("?") ? `&` : "?"}page=${page}`;
+}
+
+/**
+ * 
+ * @param {{ type: "movie" | "tv", id: any, page?: number, sort_by?: string | undefined }} props 
+ */
+const genre = (props) => {
+    return base(`discover/${props?.type}?with_genres=${props?.id}&sort_by=${props?.sort_by ?? "popularity.desc"}&language=en-US&page=${props?.page ?? 1}`);
+}
+
+/**
+ * @param {{ type: string, id: any }} props | return the media detail info includes credits, videos, similar, external_ids, images
  * @returns string
  */
 const detail = (props) => {
-    return base(`${props.type}/${props.id}?language=en-US&include_image_language=en-US&append_to_response=credits,recommendations,similar,external_ids,images`);
+    return base(`${props.type}/${props.id}?language=en-US&include_image_language=en-US&append_to_response=credits,videos,similar,external_ids,images`);
 }
 
 /**
@@ -90,4 +112,4 @@ async function get_seasons(params) {
     }
 }
 
-export { apiKeys, base, request, detail, get_seasons }
+export { apiKeys, base, request, detail, get_seasons, genre, resolve_page }

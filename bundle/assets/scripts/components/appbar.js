@@ -1,4 +1,4 @@
-import { define } from '../utils.js';
+import { define, newElement } from '../utils.js';
 
 const appbartagname = "scaffold-appbar";
 const appbarheight = 56;
@@ -18,17 +18,20 @@ define(appbartagname, {
                 this.classList.remove('-translate-y-full');
             }
             if (!this.dataset.nobg) {
+                const floatingclass = this.dataset.floatingclass;
+                const cssclass = (floatingclass ?? 'bg-black shadow-lg shadow-white/20');
                 if (currentScrollY >= appbarheight) {
-                    this.classList.add('bg-black');
+                    this.classList.add(...(cssclass.split(' ')));
                 } else {
-                    this.classList.remove('bg-black');
+                    this.classList.remove(...(cssclass.split(' ')));
                 }
             }
             this._lastScrollY = currentScrollY;
         }
         this._lastScrollY = 0;
         this._boundScrollListener = this._scrollListener.bind(this);
-        this.className = `${this.className} z-3000 flex items-center fixed top-0 left-0 right-0 h-[${appbarheight}px]`;
+        this.style.height = `${this.dataset.height ?? appbarheight}px`;
+        this.className = `${this.className} z-3000 flex items-center fixed top-0 left-0 right-0`;
         window.addEventListener('scroll', this._boundScrollListener, { passive: true });
     },
     /** @this HTMLElement */
@@ -69,8 +72,9 @@ define('back-button', {
 define('back-button-circle', {
     /** @this HTMLElement */
     mount() {
-        this.className = `bg-white/10 backdrop-blur-md rounded-full w-[40px] h-[40px] flex items-center justify-center shadow-md shadow-white/30`;
-        this.innerHTML = `<back-button></back-button>`;
+        const btn = newElement('circle-button');
+        btn.innerHTML = `<back-button></back-button>`;
+        this.replaceWith(btn)
     },
     /** @this HTMLElement */
     unmount() {

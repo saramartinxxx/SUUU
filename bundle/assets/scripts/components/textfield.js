@@ -9,7 +9,7 @@ export { apptextfieldheight, apptextfieldhint, apptextfieldtagname }
 define(apptextfieldtagname, {
     /** @this HTMLElement */
     mount() {
-        let className = `w-full h-[${apptextfieldheight}px] px-3 rounded-lg bg-white/10`;
+        let className = `w-full h-[${apptextfieldheight}px] px-3 bg-white/20`;
         this.className = `flex items-center ${this.className.length ? this.className : className}`;
         const input = newElement('input');
         input.id = apptextfieldtagname;

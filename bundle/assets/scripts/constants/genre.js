@@ -1,57 +1,57 @@
-const movieGenres = {
-    "12": "Adventure",
-    "14": "Fantasy",
-    "16": "Animation",
-    "18": "Drama",
-    "27": "Horror",
-    "28": "Action",
-    "35": "Comedy",
-    "36": "History",
-    "37": "Western",
-    "53": "Thriller",
-    "80": "Crime",
-    "878": "Science Fiction",
-    "9648": "Mystery",
-    "99": "Documentary",
-    "10402": "Music",
-    "10749": "Romance",
-    "10751": "Family",
-    "10752": "War",
-    "10770": "TV Movie"
-}
+const movieGenres = [
+    { id: 12, name: "Adventure" },
+    { id: 14, name: "Fantasy" },
+    { id: 16, name: "Animation" },
+    { id: 18, name: "Drama" },
+    { id: 27, name: "Horror" },
+    { id: 28, name: "Action" },
+    { id: 35, name: "Comedy" },
+    { id: 36, name: "History" },
+    { id: 37, name: "Western" },
+    { id: 53, name: "Thriller" },
+    { id: 80, name: "Crime" },
+    { id: 878, name: "Science Fiction" },
+    { id: 9648, name: "Mystery" },
+    { id: 99, name: "Documentary" },
+    { id: 10402, name: "Music" },
+    { id: 10749, name: "Romance" },
+    { id: 10751, name: "Family" },
+    { id: 10752, name: "War" },
+    { id: 10770, name: "TV Movie" }
+];
 
-const tvGenres = {
-    "16": "Animation",
-    "18": "Drama",
-    "35": "Comedy",
-    "37": "Western",
-    "80": "Crime",
-    "99": "Documentary",
-    "9648": "Mystery",
-    "10751": "Family",
-    "10759": "Action & Adventure",
-    "10762": "Kids",
-    "10763": "News",
-    "10764": "Reality",
-    "10765": "Sci-Fi & Fantasy",
-    "10766": "Soap",
-    "10767": "Talk",
-    "10768": "War & Politics"
-}
+const tvGenres = [
+    { id: 10759, name: "Action & Adventure" },
+    { id: 18, name: "Drama" },
+    { id: 16, name: "Animation" },
+    { id: 35, name: "Comedy" },
+    { id: 37, name: "Western" },
+    { id: 80, name: "Crime" },
+    { id: 9648, name: "Mystery" },
+    { id: 10751, name: "Family" },
+    { id: 10762, name: "Kids" },
+    { id: 10763, name: "News" },
+    { id: 10764, name: "Reality" },
+    { id: 10765, name: "Sci-Fi & Fantasy" },
+    { id: 10766, name: "Soap" },
+    { id: 10767, name: "Talk" },
+    { id: 99, name: "Documentary" },
+    { id: 10768, name: "War & Politics" }
+];
 
 const getGenres = (id, type) => {
     if (!id) return [''];
     if (Array.isArray(id)) {
         if (!id.length) return [''];
         if (type) {
-            return id.map(e => ((type === "movie" ? movieGenres : tvGenres))[e]);
+            return id.map(e => ((type === "movie" ? movieGenres : tvGenres)).find(x => x.id === e)?.name);
         }
-        return id.map(e => ({ ...movieGenres, ...tvGenres }[e]));
+        return id.map(e => ([...movieGenres, ...tvGenres].find(x => x.id === e)?.name));
     }
     if (type) {
-        return [type === "movie" ? movieGenres[id] : tvGenres[id]];
+        return [(type === "movie" ? movieGenres : tvGenres).find(x => x.id === id)?.name];
     }
-    return [{ ...movieGenres, ...tvGenres }[id]];
+    return [[...movieGenres, ...tvGenres].find(x => x.id === id)?.name];
 }
 
 export { getGenres, movieGenres, tvGenres }

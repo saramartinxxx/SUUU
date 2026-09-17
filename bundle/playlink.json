@@ -2,8 +2,8 @@
     "theme": {
         "status_bar": {
             "bar_color": "#000000",
-            "bar_brigthness": "dark",
-            "bar_icon_brigthness": "light"
+            "bar_mode": "dark",
+            "bar_icon_mode": "light"
         },
         "prefer_mode": "dark",
         "background_color": "#000000"

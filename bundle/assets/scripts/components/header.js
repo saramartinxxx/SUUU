@@ -1,20 +1,20 @@
 import { detail, request } from "../api/themoviedb.js";
 import { getGenres } from "../constants/genre.js";
-import { define, format_date, highestRated, newElement, toFixed } from "../utils.js";
+import { define, format_date, highestRated, media_title, newElement, toFixed } from "../utils.js";
 import { posterClick } from './poster.js';
 
 define('main-header', {
     /** @this HTMLElement */
     async mount() {
-        this.className = "flex flex-col w-full h-[60vh] relative";
+        this.className = "flex flex-col w-full h-[65vh] landscape:h-[calc(100vh-120px)] relative";
         this.innerHTML = `
-        <img class="object-cover w-full h-full fade_long" src="https://images.tmdb.org/t/p/original${this.__data.backdrop_path}" alt="${this.__data.name ?? this.__data.title}">
+        <img class="object-cover w-full h-full fade_long" src="https://images.tmdb.org/t/p/original${this.__data.backdrop_path}" alt="${media_title(this.__data)}">
         <div class="absolute -bottom-px left-0 right-0 h-[40vh] w-full bg-linear-to-b from-transparent to-black"></div>
         <div class="absolute top-0 left-0 right-0 h-[30vh] bg-linear-to-t from-transparent to-black"></div>
         <div class="header-info absolute bottom-0 left-0 right-0 flex flex-col justify-end items-center pb-4 slide_up">
-            <img class="title-logo hidden object-contain max-h-[15vh] max-w-[80%]" src="" alt="${this.__data.name ?? this.__data.title}">
+            <img class="title-logo hidden object-contain max-h-[15vh] max-w-[80%]" src="" alt="${media_title(this.__data)}">
             <span class="header-main-info text-center opacity-60 mt-4 mb-1 mx-4 text-s flex items-center">
-                <img src="/assets/icons/ic_tmdb.png" class="w-[34px] h-[16px] rounded-[3px] border-[.8px] border-gray-600 mr-[8px]" alt="">${toFixed(this.__data.vote_average, 1)}&nbsp;&nbsp;•&nbsp;&nbsp;${format_date(this.__data.first_air_date ?? this.__data.release_date)}
+                <img src="/assets/icons/ic_tmdb.png" class="w-[34px] h-[16px] border-[.8px] border-gray-600 mr-[8px]" alt="">${toFixed(this.__data.vote_average, 1)}&nbsp;&nbsp;•&nbsp;&nbsp;${format_date(this.__data.first_air_date ?? this.__data.release_date)}
             </span>
             <span class="genres-info text-center opacity-60 mb-2 mx-4 text-sm">${getGenres(this.__data.genre_ids, this.__data.name ? "tv" : "movie").join('&nbsp;&nbsp;•&nbsp;&nbsp;')}</span>
         </div>

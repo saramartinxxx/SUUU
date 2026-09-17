@@ -3,9 +3,9 @@ import { define, newElement } from '../utils.js';
 define('tab-button', {
     /** @this HTMLElement */
     mount() {
-        const labelText = this.textContent.trim() || 'Tab';
+        const labelText = this.ariaLabel.trim() || 'Tab';
 
-        const defaultClasses = "my-1 flex flex-none transition hover:cursor-pointer px-3 py-1 h-7 lg:h-8 rounded-lg items-center gap-2 text-[13px] lg:text-[14px] bg-gray-800 text-gray-300 select-none";
+        const defaultClasses = "my-1 flex flex-none transition hover:cursor-pointer px-3 py-1 h-7 lg:h-8 items-center gap-2 text-[13px] lg:text-[14px] bg-gray-800 text-gray-300 select-none";
         this.className = `${this.className.length ? this.className : defaultClasses}`;
 
         this.innerHTML = /* html */ `
@@ -29,6 +29,19 @@ define('tab-button', {
                 margin-right: 2px;
             }
         `;
+
         this.appendChild(style);
+
+        this.__select = () => {
+            this.parentElement.querySelectorAll('tab-button').forEach(child => {
+                child.removeAttribute('selected');
+            });
+            this.setAttribute('selected', 'true');
+            window.dispatchEvent(new CustomEvent('onTabChanged', { detail: { tab: this } }));
+        }
+
+        if (this.dataset.default) {
+            this.setAttribute('selected', 'true');
+        }
     }
 });

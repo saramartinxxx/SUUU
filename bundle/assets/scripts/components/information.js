@@ -22,7 +22,7 @@ define('information-view', {
         this.className = `flex flex-col gap-3 pb-4`;
         this.innerHTML = `
         <strong-title-marked class='mx-4'>Information</strong-title-marked>
-        <ul class="info-wrapper rounded-lg bg-gray-800 w-auto flex flex-col flex-none justify-start p-3 mx-4 overflow-hidden"></ul>
+        <ul class="info-wrapper bg-gray-800 w-auto flex flex-col flex-none justify-start p-3 mx-4 overflow-hidden"></ul>
         `;
         const infowrapper = this.querySelector('.info-wrapper');
         Object.entries(infomap).forEach(entry => {
@@ -68,7 +68,7 @@ define('people-infoview', {
         this.className = `flex flex-col gap-3 pb-4 slide_up`;
         this.innerHTML = `
         <strong-title-marked class='mx-4'>Information</strong-title-marked>
-        <ul class="info-wrapper rounded-lg bg-gray-800 w-auto flex flex-col flex-none justify-start p-3 mx-4 overflow-hidden"></ul>
+        <ul class="info-wrapper bg-gray-800 w-auto flex flex-col flex-none justify-start p-3 mx-4 overflow-hidden"></ul>
         `;
         const infowrapper = this.querySelector('.info-wrapper');
         Object.entries(infomap).forEach(entry => {

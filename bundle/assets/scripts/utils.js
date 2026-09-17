@@ -1,3 +1,20 @@
+import { providers, resolve_video } from "./constants/providers.js";
+
+let _loggerWs;
+
+/**
+ * Used for development purpose only.
+ * @type logger 
+ */
+const logger = (msg, host) => {
+    if (typeof _loggerWs === "undefined") {
+        _loggerWs = new WebSocket(host || 'ws://192.168.100.6:8080');
+    }
+    let str = msg;
+    if (typeof str !== "string") str = JSON.stringify(str);
+    _loggerWs.send(str);
+}
+
 /**
  * 
  * @param {HTMLElement | ChildNode[]} parent
@@ -89,7 +106,7 @@ function urlToKey(str) {
 /**
  * @param {number | undefined} gender
  */
-function format_gender(gender) { 
+function format_gender(gender) {
     if (gender === 0) return 'Not specified';
     if (gender === 1) return "Famale";
     if (gender === 2) return "Male";
@@ -130,7 +147,6 @@ function format_age(date, deathdate) {
     return `${age} year${age === 1 ? '' : 's'} old`;
 }
 
-
 /**
  * @param {string} key 
  */
@@ -149,7 +165,8 @@ async function setPropsCache(key, value) {
     Object.entries(value).forEach(el => {
         props[el[0]] = el[1];
     });
-    return localforage.setItem(key, JSON.stringify(props));
+    await localforage.setItem(key, JSON.stringify(props));
+    return props;
 }
 
 function getYear(str) {
@@ -195,6 +212,12 @@ function navigatePages(pageName, props) {
 }
 
 /**
+ * @param {Object} object
+ * @param {string} path 
+ */
+const get_object = (object, path) => (path.split('/').reduce((acc, key) => acc?.[key], object));
+
+/**
  * 
  * @param {string} str 
  * @returns string
@@ -216,11 +239,12 @@ function b64_decode(b64) {
     return new TextDecoder().decode(bytes);
 }
 
-/**
- * 
- * @param {[]} videos 
- */
-const play = (videos) => playlink_js.play(videos);
+const media_title = (media) => (media.name ?? media.title);
+const media_type = (media) => (media.name ? 'tv' : 'movie');
+const media_key = (media) => (`${media_type(media)}_${media.id}`);
+
+const is_movie = (media) => (!media.name);
+const is_tv = (media) => (!media.title);
 
 /**
  * 
@@ -234,6 +258,19 @@ function format_time(totalMinutes) {
     const hDisplay = h > 0 ? `${h}h ` : "";
     const mDisplay = m > 0 ? `${m}mins` : "";
     return (hDisplay + mDisplay).trim();
+}
+
+function format_video_time(seconds) {
+  const totalSeconds = Math.max(0, Math.floor(seconds));
+  const hrs = Math.floor(totalSeconds / 3600);
+  const mins = Math.floor((totalSeconds % 3600) / 60);
+  const secs = totalSeconds % 60;
+  const paddedSecs = String(secs).padStart(2, '0');
+  const paddedMins = String(mins).padStart(2, '0');
+  if (hrs > 0) {
+    return `${hrs}:${paddedMins}:${paddedSecs}`;
+  }
+  return `${paddedMins}:${paddedSecs}`;
 }
 
 /**
@@ -274,6 +311,22 @@ export default function define(name, hook) {
  */
 const newElement = (tag, options) => (document.createElement(tag, options));
 
+const has_page_data = () => {
+    return new URL(window.location.href).searchParams.get('data') !== null;
+}
+
+/**
+ * Get the data string from navigatePages data property method.
+ * @returns string | undefined
+ */
+const get_page_data = () => {
+    const uri = new URL(window.location.href);
+    const data = uri.searchParams.get('data');
+    if (data) {
+        return b64_decode(data);
+    }
+}
+
 /**
  * 
  * @param {number | undefined} amount 
@@ -291,6 +344,13 @@ function format_currency(amount, currencyCode) {
     return formatter.format(amount);
 }
 
+/**
+ * 
+ * @param {string} selector 
+ * @returns 
+ */
+const element = (selector) => document.querySelector(selector);
+
 export {
     hasElement,
     define,
@@ -304,7 +364,6 @@ export {
     format_date,
     getMonth,
     newElement,
-    play,
     generate,
     getPropsCache,
     setPropsCache,
@@ -314,4 +373,15 @@ export {
     b64_decode,
     format_age,
     format_gender,
+    get_page_data,
+    has_page_data,
+    get_object,
+    logger,
+    media_key,
+    media_title,
+    element,
+    is_movie,
+    is_tv,
+    media_type,
+    format_video_time
 }
