@@ -229,11 +229,20 @@
                 <button onclick="installextension()" class="btn btn-ext">INSTALL NOW</button>
             </div>
 
+            <div id="state-update-needed" class="hidden">
+                <div class="icon-container icon-ext"><strong>📢</strong></div>
+                <h2>Update Required!</h2>
+                <p class="description">
+                    Please update <strong>Playlink</strong> app to the latest version to continue!!!
+                </p>
+                <a href="https://playlink.dev" class="btn btn-app">UPDATE NOW</a>
+            </div>
+
             <div id="state-all-set" class="hidden">
                 <div class="icon-container icon-ext"><strong>✓</strong></div>
                 <h2>You're all set!</h2>
                 <p class="description">
-                    Now, Go to <strong>Extension page</strong> and find SUUU then click on open. thats it!!!
+                    Now, Go to <strong>Extension</strong> page and find SUUU then click on open. thats it!!!
                 </p>
             </div>
 
@@ -255,17 +264,29 @@
             const installAppState = document.getElementById('state-install-app');
             const installExtState = document.getElementById('state-install-extension');
             const allsetState = document.getElementById('state-all-set');
+            const updatestate = document.getElementById('state-update-needed');
 
             if (loadingState) loadingState.classList.add('hidden');
 
             if (typeof playlink_js === "undefined") {
                 installAppState.classList.remove('hidden');
             } else {
-                const extension = await playlink_js.extension.get('com.saramartin.suuu');
-                if (extension) {
-                    allsetState.classList.remove('hidden');
+                const updateneeded = () => {
+                    if (typeof playlink_js.utils.info !== "undefined") {
+                        const version = playlink_js.utils.info.version.replaceAll('.', '');
+                        return parseInt(version) < 602;
+                    }
+                    return true;
+                }
+                if (updateneeded()) {
+                    updatestate.classList.remove('hidden');
                 } else {
-                    installExtState.classList.remove('hidden');
+                    const extension = await playlink_js.extension.get('com.saramartin.suuu');
+                    if (extension) {
+                        allsetState.classList.remove('hidden');
+                    } else {
+                        installExtState.classList.remove('hidden');
+                    }
                 }
             }
         });
