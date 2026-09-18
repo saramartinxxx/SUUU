@@ -1,6 +1,7 @@
 import './assets/scripts/tailwind.js'
 import './assets/scripts/localforage.js'
 import './assets/scripts/lock.js'
+import './assets/scripts/update.js'
 import './assets/scripts/components/scaffold.js'
 import './assets/scripts/components/appbar.js'
 import './assets/scripts/components/textfield.js'

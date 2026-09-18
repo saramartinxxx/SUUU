@@ -16,10 +16,24 @@ import { generate } from "../utils.js";
 import { ProviderScript } from "./script.js";
 
 /** @type {Provider} */
-const vsembed_ru = {
-    movie: 'https://vsembed.ru/embed/{t}/{i}?startAt={position}',
-    tv: 'https://vsembed.ru/embed/{t}/{i}/{s}-{e}?startAt={position}',
+const vidsrc_sh = {
+    movie: 'https://vidsrc.sh/embed/{t}/{i}?startAt={position}',
+    tv: 'https://vidsrc.sh/embed/{t}/{i}/{s}-{e}?startAt={position}',
     default: true,
+    allowed_hosts: [
+        'vidsrc.sh',
+        'vidsrc2.ru',
+        'vidsrc.ir',
+        'vidsrc.me',
+        'vidsrc.io',
+        'vidsrc.gd',
+        'vidsrcme.su',
+        'vidsrcme.ru',
+        'vidsrc.tw',
+        'vidsrc.do',
+        'vidsrc.bz',
+        'vsembed.ru',
+    ],
 };
 
 /** @type {Provider} */
@@ -49,11 +63,11 @@ const vidrock_ru = {
     script: ProviderScript.manual,
 }
 
-// /** @type {Provider} */
-// const rivestream_app = {
-//     movie: 'https://www.rivestream.app/embed?type={t}&id={i}',
-//     tv: 'https://www.rivestream.app/embed?type={t}&id={i}&season={s}&episode={e}',
-// }
+/** @type {Provider} */
+const rivestream_app = {
+    movie: 'https://www.rivestream.app/embed?type={t}&id={i}',
+    tv: 'https://www.rivestream.app/embed?type={t}&id={i}&season={s}&episode={e}',
+}
 
 /** @type {Provider} */
 const viduki_net = {
@@ -107,12 +121,12 @@ export const resolve_video = (media, provider, season, episode, media_type, posi
 
 /** @type {Provider[]} */
 export const providers = [
-    vsembed_ru,
+    vidsrc_sh,
     vidapi_ru,
     vidlink_pro,
     vidrock_ru,
     // vidking_net,
-    // rivestream_app,
+    rivestream_app,
     ...[...generate(1, 4)].map(lvl => ({
         ...viduki_net,
         movie: viduki_net.movie.replace('{v}', lvl),

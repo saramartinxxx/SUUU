@@ -23,7 +23,7 @@ const base = (path) => {
 /**
  * 
  * @param {string} url 
- * @param {{ key?: string, filter?: any, days?: number }} props 
+ * @param {{ key?: string, filter?: any, days?: number, urlbuilder: ((url: string) => string) | undefined }} props 
  * @returns 
  */
 const request = async (url, props) => {
@@ -39,7 +39,7 @@ const request = async (url, props) => {
         }
     }
 
-    data = await (await fetch(withApiKey(url))).json();
+    data = await (await fetch(props?.urlbuilder ? props.urlbuilder(url) : withApiKey(url))).json();
 
     if (data) {
         if (props && props.filter && typeof props.filter === "function") {
