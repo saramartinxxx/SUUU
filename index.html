@@ -144,6 +144,7 @@
             transition: all 0.2s ease;
             cursor: pointer;
             border: none;
+            font-size: 16px;
         }
 
         .btn-app {
@@ -157,6 +158,11 @@
 
         .btn-ext {
             background: linear-gradient(135deg, #059669 0%, #0d9488 100%);
+            box-shadow: 0 10px 20px rgba(13, 148, 136, 0.3);
+        }
+
+        .btn-ext-installing {
+            background: linear-gradient(135deg, #5f6362dd 0%, #5f6362dd 100%);
             box-shadow: 0 10px 20px rgba(13, 148, 136, 0.3);
         }
 
@@ -201,6 +207,28 @@
             color: #475569;
             letter-spacing: 0.05em;
         }
+
+        .loader {
+            width: 21px;
+            padding: 4px;
+            aspect-ratio: 1;
+            border-radius: 50%;
+            background: white;
+            --_m:
+                conic-gradient(#0000 10%, #000),
+                linear-gradient(#000 0 0) content-box;
+            -webkit-mask: var(--_m);
+            mask: var(--_m);
+            -webkit-mask-composite: source-out;
+            mask-composite: subtract;
+            animation: l3 1s infinite linear;
+        }
+
+        @keyframes l3 {
+            to {
+                transform: rotate(1turn)
+            }
+        }
     </style>
 </head>
 
@@ -226,7 +254,14 @@
                 <p class="description">
                     Now, install the SUUU extension to enjoy your free media entertainment.
                 </p>
-                <button onclick="installextension()" class="btn btn-ext">INSTALL NOW</button>
+                <button id="install-active-btn" class="btn btn-ext-installing hidden">
+                    <div style="display: flex; align-items: center;">
+                        <div class="loader"></div><span style="padding-left: 12px;">PLEASE WAIT...</span>
+                    </div>
+                </button>
+                <button id="install-btn" onclick="install()" class="btn btn-ext">
+                    <span style="padding-top: 1.70px; padding-top: 1.70px;">INSTALL NOW</span>
+                </button>
             </div>
 
             <div id="state-update-needed" class="hidden">
@@ -255,9 +290,22 @@
     </main>
 
     <script>
-        async function installextension() {
-            const manifest = await (await fetch('https://raw.githubusercontent.com/saramartinxxx/SUUU/refs/heads/main/manifest.json')).json();
+        async function install() {
+            const btn = document.querySelector('#install-btn');
+            const btn1 = document.querySelector('#install-active-btn');
+            btn.classList.add('hidden');
+            btn1.classList.remove('hidden');
+            const manifest = await (await fetch('/manifest.json')).json();
             playlink_js.extension.install(manifest);
+            let interval;
+            interval = setInterval(async () => {
+                const extension = await playlink_js.extension.get('com.saramartin.suuu');
+                if (extension) {
+                    document.getElementById('state-install-extension').classList.add('hidden');
+                    document.getElementById('state-all-set').classList.remove('hidden');
+                    clearInterval(interval);
+                }
+            }, 250);
         }
         document.addEventListener("DOMContentLoaded", async function () {
             const loadingState = document.getElementById('state-loading');
