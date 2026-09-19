@@ -113,6 +113,12 @@ document.title = `SUUU - ${media_title(media)}`;
     castcrewview.__data = data;
     mainview.appendChild(castcrewview);
 
+    if (data.belongs_to_collection) {
+        const collectionview = newElement('collection-view');
+        collectionview.__data = data.belongs_to_collection;
+        mainview.appendChild(collectionview);
+    }
+
     const informationview = newElement('information-view');
     informationview.__data = data;
     mainview.appendChild(informationview);

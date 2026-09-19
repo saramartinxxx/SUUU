@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SUUU - Filter</title>
+    <link rel="stylesheet" href="../style.css">
+    <script type="module" src="../script.js"></script>
+    <script type="module" src="../assets/scripts/pages/filter.js"></script>
+</head>
+
+<body>
+    <app-scaffold>
+        <scaffold-appbar data-height="110">
+            <div class="w-full fade">
+                <div class="flex items-center discover-appbar-wrapper">
+                    <div class="w-4"></div>
+                    <back-button-circle></back-button-circle>
+                    <div class="w-4"></div>
+                    <strong-title>Filter</strong-title>
+                </div>
+                <div class="tabs flex items-center w-full overflow-x-auto gap-3 px-4 mt-4"></div>
+            </div>
+        </scaffold-appbar>
+        <div data-open="false"
+            class="filter-menu relative transition-[height] duration-300 h-0 data-[open=true]:h-[320px] w-screen px-4 overflow-hidden">
+            <div class="p-4 filter-menu-items flex flex-col gap-2 bg-gray-800 overflow-y-auto"></div>
+            <div class="flex items-center justify-end">
+                <button class="px-8 py-2 bg-gray-800 mt-2 reset-filter-btn">Reset</button>
+                <span class="mx-1"></span>
+                <button class="px-8 py-2 bg-blue-500 mt-2 start-filter-btn">Start Filter</button>
+            </div>
+        </div>
+        <div class="w-full my-24 flex fade center-loading">
+            <circle-progressbar class="mx-auto" data-width="42"></circle-progressbar>
+        </div>
+        <app-gridview></app-gridview>
+        <div class="hidden flex-col filter-dialog bg-black/70 top-0 absolute z-4000 h-screen w-screen fade overflow-y-auto p-4" onclick="this.classList.remove('flex');this.classList.add('hidden')">
+            <div class="max-h-[70%] w-full overflow-y-auto flex flex-col gap-3 filter-dialog-items bg-gray-800 border border-white/30 my-auto p-4"></div>
+        </div>
+        <div class="w-full my-6 hidden fade bottom-loading">
+            <circle-progressbar class="mx-auto" data-width="32"></circle-progressbar>
+        </div>
+    </app-scaffold>
+</body>
+
+</html>

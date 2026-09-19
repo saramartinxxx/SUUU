@@ -22,11 +22,11 @@ define('app-menu', {
         }
         const options = [
             {
-                name: "Discover",
-                icon: "o",
+                name: "Filter",
+                icon: "filter",
                 onclick: (event) => {
                     event.stopPropagation();
-                    navigatePages('discover');
+                    navigatePages('filter');
                 }
             },
             {
@@ -66,6 +66,10 @@ define('app-menu', {
                 }
             },
             {
+                name: 'User',
+                icon: "",
+            },
+            {
                 name: "My List",
                 icon: "list",
                 onclick: (event) => {
@@ -81,25 +85,24 @@ define('app-menu', {
                     navigatePages('history');
                 }
             },
-            // {
-            //     name: "Sync with TMDb",
-            //     icon: "arrow-right-to-bracket",
-            //     function: (event) => {
-            //         event.stopPropagation();
-            //         navigatePages('auth');
-            //     }
-            // },
         ];
 
         options.forEach(op => {
-            const li = newElement('li');
-            li.className = `gap-3 flex items-center mb-2 h-[44px] w-full px-4 bg-white/10`;
-            li.innerHTML = `
+            if (op.name === "User") {
+                const sp = newElement('div');
+                sp.className = `h-5 w-full flex items-center`;
+                sp.innerHTML = `<div class='h-px bg-white/40 w-full mb-2'></div>`;
+                menuwrapper.appendChild(sp);
+            } else {
+                const li = newElement('li');
+                li.className = `gap-3 flex items-center mb-2 h-[44px] w-full px-4 bg-white/10`;
+                li.innerHTML = `
             <i class='fa-solid fa-${op.icon}'></i>
             <span>${op.name}</span>
             `;
-            li.onclick = op.onclick;
-            menuwrapper.appendChild(li);
+                li.onclick = op.onclick;
+                menuwrapper.appendChild(li);
+            }
         });
     },
 });
