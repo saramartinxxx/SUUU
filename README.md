@@ -17,6 +17,10 @@ Install the [Playlink - Auto Popup Blocker](https://play.google.com/store/apps/d
 **That's it! You're ready to browse ad-free.** 🎉
 
 ---
+▶️ 👉 **[Watch full tutorial video on Youtube](https://www.youtube.com/shorts/P4bJuesF_9k)**
+[![Watch the tutorial video](https://i.ytimg.com/vi/P4bJuesF_9k/maxresdefault.jpg)](https://www.youtube.com/shorts/P4bJuesF_9k)
+
+---
 
 ## ⚠️ Disclaimer & Terms of Use
 
