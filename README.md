@@ -22,13 +22,6 @@ Install the [Playlink - Auto Popup Blocker](https://play.google.com/store/apps/d
 
 ---
 
-## ⚠️ Disclaimer & Terms of Use
-
-* **User Responsibility:** This extension project is provided solely for personal user preference and legitimate ad-blocking purposes. The developers and contributors are not responsible or liable for any illegal, unauthorized, or misuse activities conducted by the user.
-* **External Content:** All media, streams, and content accessed or formatted through this extension are scraped or embedded directly from external hosting websites. None of this content is hosted, owned, or controlled by the developers of this extension. We hold zero liability over third-party media content or copyright compliance of external hosts.
-
----
-
 ## ✨ Key Features
 * 🚫 **Auto-Block Popups:** Blocks intrusive popups and forced redirects instantly.
 * ⚡ **Fast & Lightweight:** Optimized to run smoothly without slowing down your device.
@@ -40,3 +33,10 @@ Install the [Playlink - Auto Popup Blocker](https://play.google.com/store/apps/d
 ## 🤝 Contributing
 Contributions, bug reports, and feature requests are welcome!  
 Feel free to open an issue or submit a pull request on the [Issues](../../issues) page.
+
+---
+
+## ⚠️ Disclaimer & Terms of Use
+
+* **User Responsibility:** This extension project is provided solely for personal user preference and legitimate ad-blocking purposes. The developers and contributors are not responsible or liable for any illegal, unauthorized, or misuse activities conducted by the user.
+* **External Content:** All media, streams, and content accessed or formatted through this extension are scraped or embedded directly from external hosting websites. None of this content is hosted, owned, or controlled by the developers of this extension. We hold zero liability over third-party media content or copyright compliance of external hosts.
