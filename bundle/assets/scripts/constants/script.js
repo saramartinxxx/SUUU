@@ -21,4 +21,16 @@ export class ProviderScript {
     static get auto() {
         return `(${iframescript.toString()})();`;
     }
+
+    /**
+     * 
+     * @param {string | undefined} name 
+     * @returns 
+     */
+    static getByName(name) {
+        if (!name) return ProviderScript.auto;
+        if (name.length >= 7) return name;
+        if (name === "manual") return ProviderScript.manual;
+        return ProviderScript.auto;
+    }
 }

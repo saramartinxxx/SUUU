@@ -12,68 +12,7 @@
  * }} Provider
  */
 
-import { generate } from "../utils.js";
 import { ProviderScript } from "./script.js";
-
-/** @type {Provider} */
-const vidsrc_sh = {
-    movie: 'https://vidsrc.sh/embed/{t}/{i}?startAt={position}',
-    tv: 'https://vidsrc.sh/embed/{t}/{i}/{s}-{e}?startAt={position}',
-    default: true,
-    allowed_hosts: [
-        'vidsrc.sh',
-        'vidsrc2.ru',
-        'vidsrc.ir',
-        'vidsrc.me',
-        'vidsrc.io',
-        'vidsrc.gd',
-        'vidsrcme.su',
-        'vidsrcme.ru',
-        'vidsrc.tw',
-        'vidsrc.do',
-        'vidsrc.bz',
-        'vsembed.ru',
-    ],
-};
-
-/** @type {Provider} */
-const vidapi_ru = {
-    movie: 'https://vaplayer.ru/embed/{t}/{i}?startAt={position}',
-    tv: 'https://vaplayer.ru/embed/{t}/{i}/{s}/{e}?startAt={position}',
-}
-
-// /** @type {Provider} */
-// const vidking_net = {
-//     movie: 'https://www.vidking.net/embed/{t}/{i}?autoPlay=true',
-//     tv: 'https://www.vidking.net/embed/{t}/{i}/{s}/{e}?autoPlay=true',
-// }
-
-/** @type {Provider} */
-const vidlink_pro = {
-    movie: 'https://vidlink.pro/{t}/{i}?autoplay=true&startAt={position}',
-    tv: 'https://vidlink.pro/{t}/{i}/{s}/{e}?autoplay=true&startAt={position}',
-    script: ProviderScript.manual,
-}
-
-/** @type {Provider} */
-const vidrock_ru = {
-    movie: 'https://vidrock.ru/{t}/{i}?autoplay=true&startAt={position}',
-    tv: 'https://vidrock.ru/{t}/{i}/{s}/{e}?autoplay=true&startAt={position}',
-    allowed_hosts: ['vidrock.ru', 'vidrock.to'],
-    script: ProviderScript.manual,
-}
-
-/** @type {Provider} */
-const rivestream_app = {
-    movie: 'https://www.rivestream.app/embed?type={t}&id={i}',
-    tv: 'https://www.rivestream.app/embed?type={t}&id={i}&season={s}&episode={e}',
-}
-
-/** @type {Provider} */
-const viduki_net = {
-    movie: 'https://www.viduki.net/{v}/{t}/{i}',
-    tv: 'https://www.viduki.net/{v}/{t}/{i}/{s}/{e}',
-}
 
 const onlyhost = (str) => {
     try {
@@ -113,24 +52,28 @@ export const resolve_video = (media, provider, season, episode, media_type, posi
         runtime: media.runtime,
         thumbnail: `https://images.tmdb.org/t/p/w400${media.backdrop_path}`,
         is_iframe: provider.is_iframe ?? true,
-        iframe_script: provider.script ?? ProviderScript.auto,
+        iframe_script: ProviderScript.getByName(provider.script),
         iframe_allowed_hosts: provider.allowed_hosts,
         iframe_script_ms: provider.script_ms,
     }
 }
 
-/** @type {Provider[]} */
-export const providers = [
-    vidsrc_sh,
-    vidapi_ru,
-    vidlink_pro,
-    vidrock_ru,
-    // vidking_net,
-    rivestream_app,
-    ...[...generate(1, 4)].map(lvl => ({
-        ...viduki_net,
-        movie: viduki_net.movie.replace('{v}', lvl),
-        tv: viduki_net.tv.replace('{v}', lvl),
-        prefix: `VIDUKI.NET - API ${lvl}`,
-    })),
-];
+export const providers = (reload) => new Promise(async resolve => {
+    const key = 'source-providers';
+    const source = 'https://solidcdn.saramartin0701.workers.dev/?key=providers';
+    let data = await localforage.getItem(key);
+    if (data && !reload) {
+        data = JSON.parse(data);
+        resolve(data);
+    } else {
+        const resp = await playlink_js.request(source);
+        if (resp.status !== 200) {
+            resolve([]);
+            return;
+        }
+        const results = JSON.parse(resp.data);
+        await localforage.setItem(key, JSON.stringify(results));
+        resolve(results);
+        if (reload) alert(`${results.length} providers has been reloaded successfully!`);
+    }
+});

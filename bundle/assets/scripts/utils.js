@@ -1,5 +1,3 @@
-import { providers, resolve_video } from "./constants/providers.js";
-
 let _loggerWs;
 
 /**

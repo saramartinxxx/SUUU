@@ -3,6 +3,7 @@ import { add_to_list, is_added_to_list, remove_from_list } from '../database/myl
 import { createWrapper } from "../components/wrapper.js";
 import { play_media } from "../play.js";
 import { element, format_video_time, get_page_data, getPropsCache, is_movie, media_key, media_title, newElement } from "../utils.js";
+import { providers } from "../constants/providers.js";
 
 let media = JSON.parse(get_page_data());
 let data;
@@ -12,6 +13,10 @@ if (media) data = { ...media };
 document.title = `SUUU - ${media_title(media)}`;
 
 (async () => {
+
+    // Load the providers before click watch to reduce waiting time on click.
+    providers().then(() => {});
+
     const scaffold = document.querySelector('app-scaffold');
     scaffold.style.paddingTop = '0px';
 

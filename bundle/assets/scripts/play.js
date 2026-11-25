@@ -31,7 +31,7 @@ export const play_media = async (media, season, episode, media_type) => {
         if ('position' in props) position = props.position;
         if ('url' in props) url = props.url;
     }
-    const videos = providers.map(provider => {
+    const videos = (await providers()).map(provider => {
         return resolve_video(media, provider, season, episode, media_type, position);
     });
     if (isTV) {

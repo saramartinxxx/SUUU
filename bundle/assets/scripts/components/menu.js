@@ -1,5 +1,6 @@
 import { base, genre } from '../api/themoviedb.js';
 import { movieGenres, tvGenres } from '../constants/genre.js';
+import { providers } from '../constants/providers.js';
 import { b64_encode, define, navigatePages, newElement } from '../utils.js';
 import { appbarheight } from './appbar.js';
 import { top_playlist } from '../constants/top_playlist.js';
@@ -85,6 +86,13 @@ define('app-menu', {
                     navigatePages('history');
                 }
             },
+            {
+                name: "Reload Providers",
+                icon: "rotate-right",
+                onclick: (event) => {
+                    providers(true).then(() => {});
+                }
+            }
         ];
 
         options.forEach(op => {
