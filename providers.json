@@ -1,0 +1,63 @@
+[
+    {
+        "movie": "https://vidsrc.sh/embed/{t}/{i}?startAt={position}",
+        "tv": "https://vidsrc.sh/embed/{t}/{i}/{s}-{e}?startAt={position}",
+        "default": true,
+        "allowed_hosts": [
+            "vidsrc.sh",
+            "vidsrc2.ru",
+            "vidsrc.ir",
+            "vidsrc.me",
+            "vidsrc.io",
+            "vidsrc.gd",
+            "vidsrcme.su",
+            "vidsrcme.ru",
+            "vidsrc.tw",
+            "vidsrc.do",
+            "vidsrc.bz",
+            "vsembed.ru"
+        ]
+    },
+    {
+        "movie": "https://vaplayer.ru/embed/{t}/{i}?startAt={position}",
+        "tv": "https://vaplayer.ru/embed/{t}/{i}/{s}/{e}?startAt={position}"
+    },
+    {
+        "movie": "https://vidlink.pro/{t}/{i}?autoplay=true&startAt={position}",
+        "tv": "https://vidlink.pro/{t}/{i}/{s}/{e}?autoplay=true&startAt={position}",
+        "script": "manual"
+    },
+    {
+        "movie": "https://vidrock.ru/{t}/{i}?autoplay=true&startAt={position}",
+        "tv": "https://vidrock.ru/{t}/{i}/{s}/{e}?autoplay=true&startAt={position}",
+        "allowed_hosts": [
+            "vidrock.ru",
+            "vidrock.to"
+        ],
+        "script": "manual"
+    },
+    {
+        "movie": "https://www.rivestream.app/embed?type={t}&id={i}",
+        "tv": "https://www.rivestream.app/embed?type={t}&id={i}&season={s}&episode={e}"
+    },
+    {
+        "movie": "https://www.viduki.net/1/{t}/{i}",
+        "tv": "https://www.viduki.net/1/{t}/{i}/{s}/{e}",
+        "prefix": "VIDUKI.NET - API 1"
+    },
+    {
+        "movie": "https://www.viduki.net/2/{t}/{i}",
+        "tv": "https://www.viduki.net/2/{t}/{i}/{s}/{e}",
+        "prefix": "VIDUKI.NET - API 2"
+    },
+    {
+        "movie": "https://www.viduki.net/3/{t}/{i}",
+        "tv": "https://www.viduki.net/3/{t}/{i}/{s}/{e}",
+        "prefix": "VIDUKI.NET - API 3"
+    },
+    {
+        "movie": "https://www.viduki.net/4/{t}/{i}",
+        "tv": "https://www.viduki.net/4/{t}/{i}/{s}/{e}",
+        "prefix": "VIDUKI.NET - API 4"
+    }
+]
